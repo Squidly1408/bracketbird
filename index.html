@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BracketBirdCode — Software Engineer Portfolio</title>
+    <link rel="shortcut icon" href="./logo.svg" type="image/x-icon">
+    <meta name="description"
+        content="BracketBird / BracketBirdCode — Software Engineer portfolio: projects, skills, experience, testimonials, contact." />
+    <style>
+        :root {
+            --bg: #171717;
+            --panel: #1f1f1f;
+            --text: #ffffff;
+            --muted: #c9c9c9;
+            --accent: #00e6ff;
+            /* Cyan */
+            --accent-2: #ff2fb3;
+            /* Magenta */
+            --ring: 0 0 0 2px color-mix(in oklab, var(--accent) 60%, transparent);
+            --radius: 18px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+            background: radial-gradient(1400px 800px at 80% -40%, color-mix(in oklab, var(--accent) 10%, transparent), transparent),
+                radial-gradient(800px 600px at -10% 10%, color-mix(in oklab, var(--accent-2) 10%, transparent), transparent),
+                var(--bg);
+            color: var(--text);
+            background-repeat: no-repeat;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 20px
+        }
+
+        /* Scroll progress */
+        .progress {
+            position: fixed;
+            inset: 0 auto auto 0;
+            height: 4px;
+            width: 0;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            z-index: 1000
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: rgba(23, 23, 23, .7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #2a2a2a
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 0
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            letter-spacing: .4px
+        }
+
+        .logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: #171717;
+            box-shadow: var(--shadow)
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px
+        }
+
+        nav a {
+            padding: 10px 12px;
+            border-radius: 12px;
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        nav a:hover {
+            color: var(--text);
+            background: #242424
+        }
+
+        .cta {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 700
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #111
+        }
+
+        .btn-ghost {
+            background: #232323;
+            color: var(--text);
+            border: 1px solid #2f2f2f
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0 40px;
+            position: relative
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            gap: 30px;
+            align-items: center
+        }
+
+        .kicker {
+            color: var(--accent);
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase
+        }
+
+        h1 {
+            font-size: clamp(32px, 3.4vw, 56px);
+            line-height: 1.15;
+            margin: .2em 0 .4em;
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: clamp(16px, 1.8vw, 19px)
+        }
+
+        .chiprow {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 18px 0 0
+        }
+
+        .chip {
+            border: 1px solid #2e2e2e;
+            background: #202020;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            color: #ddd
+        }
+
+        .hero-card {
+            padding: 22px;
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, #1f1f1f, #191919);
+            border: 1px solid #2a2a2a;
+            box-shadow: var(--shadow)
+        }
+
+        .metric {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 10px 0
+        }
+
+        .metric strong {
+            font-size: 22px
+        }
+
+        /* Section */
+        section {
+            padding: 64px 0
+        }
+
+        section h2 {
+            font-size: clamp(24px, 2.4vw, 34px);
+            margin: 0 0 14px
+        }
+
+        .sub {
+            color: var(--muted);
+            margin: 0 0 24px
+        }
+
+        /* Skills */
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px
+        }
+
+        .skill {
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: #1e1e1e;
+            border: 1px solid #2b2b2b;
+            position: relative;
+            isolation: isolate
+        }
+
+        .skill::after {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            z-index: -1;
+            border-radius: inherit;
+            background: conic-gradient(from 180deg, color-mix(in oklab, var(--accent) 40%, transparent), transparent 30%, color-mix(in oklab, var(--accent-2) 40%, transparent) 60%, transparent 85%);
+            filter: blur(12px);
+            opacity: .25;
+            transition: opacity .3s ease
+        }
+
+        .skill:hover::after {
+            opacity: .6
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px
+        }
+
+        .project-card {
+            padding: 18px;
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, #1f1f1f, #191919);
+            border: 1px solid #2a2a2a;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden
+        }
+
+        .project-card h3 {
+            margin: .2em 0 .3em
+        }
+
+        .project-card p {
+            color: var(--muted)
+        }
+
+        .project-card::before {
+            content: "";
+            position: absolute;
+            inset: auto -40% -40% auto;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(closest-side, color-mix(in oklab, var(--accent) 30%, transparent), transparent 70%);
+            transform: rotate(25deg)
+        }
+
+        /* Experience */
+        .timeline {
+            position: relative;
+            margin: 22px 0 0;
+            padding-left: 18px
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(var(--accent), var(--accent-2))
+        }
+
+        .experience-item {
+            background: #1f1f1f;
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin: 14px 0
+        }
+
+        .experience-item h3 {
+            margin: .2em 0
+        }
+
+        .experience-item span {
+            color: var(--accent);
+            font-weight: 800
+        }
+
+        .experience-item p {
+            color: var(--muted);
+            margin: .3em 0 0
+        }
+
+        /* Testimonials */
+        .testimonials {
+            position: relative
+        }
+
+        .testrail {
+            display: flex;
+            gap: 16px;
+            overflow: visible;
+            flex-direction: row;
+        }
+
+        .testimonial {
+            min-width: 100%;
+            background: #1f1f1f;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 20px
+        }
+
+        .testimonial p {
+            font-size: 1.05rem
+        }
+
+        .testimonial span {
+            display: block;
+            margin-top: 10px;
+            color: var(--muted);
+            font-weight: 700
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 12px
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #3a3a3a;
+            border: none
+        }
+
+        .dot[aria-current="true"] {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2))
+        }
+
+        /* Contact */
+        .contact-card {
+            display: grid;
+            grid-template-columns: 1.3fr .7fr;
+            gap: 16px;
+            background: #1f1f1f;
+            border: 1px solid #2a2a2a;
+            border-radius: 18px;
+            padding: 18px
+        }
+
+        form {
+            display: grid;
+            gap: 10px
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            background: #191919;
+            border: 1px solid #2a2a2a;
+            color: var(--text);
+            padding: 12px 14px;
+            border-radius: 12px
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical
+        }
+
+        label {
+            font-weight: 700
+        }
+
+        /* Footer */
+        footer {
+            padding: 36px 0;
+            color: #a9a9a9;
+            border-top: 1px solid #2a2a2a;
+            margin-top: 10px;
+        }
+
+        /* Utilities + animations */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(12px)
+        }
+
+        .show {
+            opacity: 1;
+            transform: none;
+            transition: opacity .6s ease, transform .6s ease
+        }
+
+        @media (max-width: 920px) {
+            .hero-grid {
+                grid-template-columns: 1fr
+            }
+
+            .contact-card {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hidden {
+                opacity: 1;
+                transform: none
+            }
+
+            .skill::after {
+                display: none
+            }
+
+            .progress {
+                display: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress" id="progress"></div>
+    <header>
+        <div class="container nav">
+            <div class="brand">
+                <div class="logo" aria-hidden="true">
+                    <img src="./logo.svg" alt="BracketBird Logo" viewBox="0 0 24 24" fill="none"  aria-hidden="true">
+                   
+                </div>
+                <span>BracketBird<span style="color:var(--accent-2)">Code</span></span>
+            </div>
+            <nav aria-label="Primary">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#experience">Experience</a>
+                <a href="#testimonials">Quotes</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="cta">
+                <button class="btn btn-ghost" id="copyEmail" aria-label="Copy email">Copy Email</button>
+                <a class="btn btn-primary" href="#projects">View Work</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero container" id="about">
+            <div class="hero-grid">
+                <div>
+                    <div class="kicker hidden">Software Engineer • Newcastle AU</div>
+                    <h1 class="hidden">Hi, I’m Lucas — a.k.a. <span
+                            style="background:linear-gradient(135deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent;">BracketBirdCode</span>.
+                    </h1>
+                    <p class="lead hidden">I design and build reliable software and hardware systems: full‑stack web,
+                        mobile apps, embedded electronics, and applied AI/ML. I care about clarity, performance and
+                        impact.</p>
+                    <div class="chiprow hidden">
+                        <span class="chip">Full‑stack Web</span>
+                        <span class="chip">Flutter/Dart</span>
+                        <span class="chip">Python + ML</span>
+                        <span class="chip">Embedded / IoT</span>
+                    </div>
+                </div>
+                <div class="hero-card hidden" role="group" aria-label="Quick stats">
+                    <div class="metric"><strong>7</strong> public projects</div>
+                    <div class="metric"><strong>25</strong> technical skills</div>
+                    <div class="metric"><strong>8</strong> quotes from collaborators</div>
+                    <div class="metric"><strong>6</strong> experiences</div>
+                    <div class="chiprow">
+                        <button class="btn btn-primary" id="downloadCV">Download CV</button>
+                        <a class="btn btn-ghost" href="#contact">Let’s build</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="container" id="skills">
+            <h2>Skills</h2>
+            <p class="sub">A toolbox spanning software, ML, and hardware — focused on shipping real products.</p>
+            <div class="skills" id="skillsGrid">
+                <!-- Skills injected by JS for easier reuse -->
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="container" id="projects">
+            <h2>Projects</h2>
+            <p class="sub">Selected work — design, engineering, and research.</p>
+            <div class="projects-grid">
+                <article class="project-card hidden">
+                    <h3>Strocoge</h3>
+                    <p>A project I worked on with Associate / Senior Lecturers and an Associate Professor at the
+                        University of Newcastle. Aimed to give a voice to those who need it via a glove embedded with
+                        electronics.</p>
+                </article>
+                <article class="project-card hidden">
+                    <h3>Luvium</h3>
+                    <p>A social media website designed, developed and tested to increase collaboration at Cooks Hill
+                        Campus, now being redesigned to suit the uses of The University of Newcastle.</p>
+                </article>
+                <article class="project-card hidden">
+                    <h3>AAC App</h3>
+                    <p>An app design for any device from Windows to iPhone, aimed to allow communication for those in
+                        need, improving on current apps through deep customization.</p>
+                </article>
+                <article class="project-card hidden">
+                    <h3>Squidly's Folder Tools</h3>
+                    <p>A Python app with a suite of developer and ML utilities for everyday tasks you shouldn’t have to
+                        Google — without the sketchy websites.</p>
+                </article>
+                <article class="project-card hidden">
+                    <h3>Babel-Search</h3>
+                    <p>A word‑hunting game set in the infinite Library of Babel. Find real words hidden in random pages,
+                        race the clock, and score more per letter.</p>
+                </article>
+                <article class="project-card hidden">
+                    <h3>BPE-Flower</h3>
+                    <p>An editable web graph for Big Picture Education — a clean, digital way for teachers and students
+                        to track progress and goals.</p>
+                </article>
+                <article class="project-card hidden">
+                    <h3>UConSoft</h3>
+                    <p>A spin‑out from Luvium. Refocused on universities and students, helping with marketing, student
+                        portfolios, and WIL selection.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="container" id="experience">
+            <h2>Experience</h2>
+            <p class="sub">Learning by building — in industry, at uni, and with communities.</p>
+            <div class="timeline">
+                <div class="experience-item hidden">
+                    <h3>Software Engineer level 2 | SAPHI Engineering</h3>
+                    <span>2023 – Present</span>
+                    <p>I work at and completed an internship at a leading tech‑agnostic solution provider in Newcastle
+                        and one of the most influential ICT companies in Australia.</p>
+                </div>
+                <div class="experience-item hidden">
+                    <h3>Freelance Software Developer | Big Picture Education</h3>
+                    <span>2025 – 2025</span>
+                    <p>I built a Java app for Big Picture Education to help teachers and students track their progress.
+                    </p>
+                </div>
+                <div class="experience-item hidden">
+                    <h3>Big Picture Education Intern | University of Newcastle, Australia</h3>
+                    <span>2023 – 2024</span>
+                    <p>Worked with Associate Lecturers, Associate Professors, and Senior Lecturers on projects at a
+                        state‑of‑the‑art university based in Newcastle.</p>
+                </div>
+                <div class="experience-item hidden">
+                    <h3>School Based Intern | NuBots</h3>
+                    <span>2024 – 2024</span>
+                    <p>Completed a shadow day with the team that builds robots for international competition, learning
+                        core robotics concepts.</p>
+                </div>
+                <div class="experience-item hidden">
+                    <h3>School Based Intern | RedCrow</h3>
+                    <span>2024 – 2024</span>
+                    <p>Shadowed at RedCrow (Maitland), worked on testing, and highlighted multiple bugs in production
+                        code.</p>
+                </div>
+                <div class="experience-item hidden">
+                    <h3>School Based Intern | Clickk Newcastle</h3>
+                    <span>2022 – 2022</span>
+                    <p>Worked on designing and developing websites, learning processes and best practices from
+                        experienced staff.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials / Quotes -->
+        <section class="container testimonials" id="testimonials">
+            <h2>Quotes</h2>
+            <p class="sub">What collaborators, lecturers and mentors say.</p>
+            <div class="testrail" id="testrail" aria-live="polite">
+                <div class="testimonial">
+                    <p>"Lucas is a rare kind of student, motivated, innovative, and determined to make a positive impact
+                        on the world around him. It is a rare joy to find a student with such focus and drive, I look
+                        forward to seeing his education and career prosper."</p>
+                    <span>- Dr. Jacqueline D Bailey, Lecturer — Computing & IT, School of Information and Physical
+                        Sciences, The University of Newcastle</span>
+                </div>
+                <div class="testimonial">
+                    <p>"Lucas was an absolute pleasure to deal with. He assisted us with some website and graphic design
+                        tasks. He performed them to a very high standard. I have no hesitation in recommending Lucas to
+                        any local design or development companies."</p>
+                    <span>- Chris Chapman, Director of Clickk Pty Ltd</span>
+                </div>
+                <div class="testimonial">
+                    <p>"Lucas is a talented future engineer with a bright future ahead. He has a passion for technology
+                        and it shows!"</p>
+                    <span>- Liam, CCO of SAPHI Engineering</span>
+                </div>
+                <div class="testimonial">
+                    <p>"As Lucas's teacher when he began his journey in project-based learning, I had the pleasure of
+                        seeing him demonstrate incredible adaptability, a deep thirst for knowledge, and a keen ability
+                        to solve problems… showcasing both intellect and a commitment to positive impact."</p>
+                    <span>- Thomas Deane, Head Teacher of Well Being, Newcastle High School</span>
+                </div>
+                <div class="testimonial">
+                    <p>"Lucas contributed an interactive JavaScript module for the Big Picture Learning Australia's
+                        website. He was a pleasure to work with — highly responsive to feature requests and his code was
+                        clean, effective and elegant."</p>
+                    <span>- Joe Wickert, CTO Big Picture Learning Australia</span>
+                </div>
+                <div class="testimonial">
+                    <p>"Lucas is very intelligent and self-managed. He is very process driven and provides a high
+                        standard of work."</p>
+                    <span>- Chris Chapman, Director of Clickk Pty Ltd</span>
+                </div>
+                <div class="testimonial">
+                    <p>"I met Lucas when he was a high school student conducting a project under the Big Picture
+                        program… Lucas demonstrated deep knowledge of both the hardware and software, plus rare
+                        enthusiasm and curiosity."</p>
+                    <span>- Dr. Alexandre Mendes, Senior Lecturer — Computing & IT, University of Newcastle</span>
+                </div>
+                <div class="testimonial">
+                    <p>"Lucas's willingness to help and support others, strive for personal excellence and take on
+                        feedback make him an excellent learner. It has been a pleasure to see his growth."</p>
+                    <span>- Nick Willis, Ex Deputy Campus Leader, Cooks Hill Campus, Newcastle High School</span>
+                </div>
+            </div>
+            <div class="dots" role="tablist" aria-label="Testimonials" id="dots"></div>
+        </section>
+
+        <!-- Contact -->
+        <section class="container" id="contact">
+            <h2>Contact</h2>
+            <p class="sub">Got a challenge worth building? Let’s talk.</p>
+            <div class="contact-card">
+                <form id="contactForm" novalidate>
+                    <div class="grid-2">
+                        <div>
+                            <label for="name">Name</label>
+                            <input id="name" name="name" autocomplete="name" required />
+                        </div>
+                        <div>
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="email" autocomplete="email" required />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <div class="chiprow">
+                        <button class="btn btn-primary" type="submit">Send</button>
+                        <span id="formMsg" role="status" aria-live="polite"></span>
+                    </div>
+                </form>
+                <div>
+                    <div class="hero-card">
+                        <h3>Hire / Collaborate</h3>
+                        <p class="sub">Based in Newcastle, Australia. Open to remote and hybrid work.
+                        </p>
+                        <div class="chiprow">
+                            <div class="chip">Email: <strong id="emailText">bracketbirdcode@Gmail.com</strong></div>
+                            <div class="chip">GitHub: <strong>BracketBird</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container"
+            style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+            <div>© <span id="year"></span> BracketBirdCode</div>
+            <div>Made with <span aria-hidden="true">{ }</span> & focused craftsmanship.</div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== Accessibility / helpers =====
+        const $ = (q, ctx = document) => ctx.querySelector(q)
+        const $$ = (q, ctx = document) => Array.from(ctx.querySelectorAll(q))
+
+        // Scroll progress
+        const prog = document.getElementById('progress')
+        const updateProgress = () => {
+            const sTop = window.scrollY
+            const docH = document.body.scrollHeight - window.innerHeight
+            prog.style.width = (docH ? (sTop / docH) * 100 : 0) + '%'
+        }
+        updateProgress();
+        document.addEventListener('scroll', updateProgress, { passive: true })
+
+        // Intersection animations
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('show');
+                    io.unobserve(e.target)
+                }
+            })
+        }, { threshold: .1 })
+        $$('.hidden').forEach(el => io.observe(el))
+
+        // Dynamic skills injection (25 skills)
+        const skills = [
+            'Adafruit', 'Ai', 'Arduino', 'AutoDesk Eagle', 'CSS', 'Dart', 'Firebase Auth', 'Firebase', 'Flutter', 'Fusion360', 'Git', 'GitHub', 'HTML', 'Java', 'JavaScript', 'Linux - Debian', 'MicroPython', 'Pandas', 'Python', 'PyTorch', 'Raspberry Pi', 'SVG', 'TensorFlow', 'Visual Studio', 'Visual Studio Code'
+        ]
+        const skillsGrid = document.getElementById('skillsGrid')
+        skills.forEach(txt => {
+            const div = document.createElement('div')
+            div.className = 'skill hidden'
+            div.textContent = txt
+            skillsGrid.appendChild(div)
+            io.observe(div)
+        })
+
+        // Testimonials slider
+        const rail = document.getElementById('testrail')
+        const slides = $$('.testimonial', rail)
+        const dots = document.getElementById('dots')
+        let i = 0, autoplay = true, timer
+
+        function go(n) {
+            i = (n + slides.length) % slides.length
+            rail.style.transform = `translateX(${-i * 100}%)`
+                ; $$('.dot', dots).forEach((d, idx) => d.setAttribute('aria-current', idx === i))
+            resetTimer()
+        }
+        function resetTimer() {
+            if (!autoplay) return
+            clearTimeout(timer)
+            timer = setTimeout(() => go(i + 1), 6500)
+        }
+        slides.forEach((_, idx) => {
+            const b = document.createElement('button')
+            b.className = 'dot'
+            b.type = 'button'
+            b.setAttribute('aria-label', `Show quote ${idx + 1}`)
+            b.addEventListener('click', () => { autoplay = false; go(idx) })
+            dots.appendChild(b)
+        })
+        go(0)
+
+        // Copy email
+        const emailText = document.getElementById('emailText').textContent
+        document.getElementById('copyEmail').addEventListener('click', async () => {
+            try { await navigator.clipboard.writeText('bracketbirdcode@gmail.com '); toast('Email copied!') } catch { toast('Copy failed') }
+        })
+
+        // Download CV
+        document.getElementById('downloadCV').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.href = './LucasNewman_Resume_Quotes.pdf'; // Path to your PDF
+            link.download = 'LucasNewman_Resume.pdf'; // Name of file when downloaded
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+
+        // Contact form (client-only demo)
+        const form = document.getElementById('contactForm');
+        const formMsg = document.getElementById('formMsg');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            if (!data.name || !data.email || !data.message) {
+                formMsg.textContent = 'Please complete all fields.';
+                return;
+            }
+
+            // Construct the mailto link
+            const subject = encodeURIComponent(`New message from ${data.name}`);
+            const body = encodeURIComponent(
+                `Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`
+            );
+            const mailtoLink = `mailto:bracketbirdcode@gmail.com?subject=${subject}&body=${body}`;
+
+            // Open the default email client
+            window.location.href = mailtoLink;
+
+            // Reset form and show confirmation
+            form.reset();
+            formMsg.textContent = 'Thanks! Your email client should open shortly.';
+            setTimeout(() => formMsg.textContent = '', 4000);
+        });
+
+
+        // Tiny toast
+        function toast(msg) {
+            const t = document.createElement('div')
+            t.textContent = msg
+            t.style.cssText = `position:fixed;inset:auto auto 24px 50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#111;padding:10px 14px;border-radius:12px;font-weight:800;box-shadow:var(--shadow);z-index:1001`
+            document.body.appendChild(t)
+            setTimeout(() => t.remove(), 1800)
+        }
+
+        // Footer year
+        document.getElementById('year').textContent = new Date().getFullYear()
+    </script>
+</body>
+
+</html>
