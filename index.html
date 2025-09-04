@@ -102,34 +102,34 @@
         }
 
         /* === SLIDE-IN MOBILE MENU === */
-   .nav-menu {
-    position: fixed;
-    top: 70px;
-    right: 0;
-    width: 75%;
-    max-width: 300px;
+        .nav-menu {
+            position: fixed;
+            top: 70px;
+            right: 0;
+            width: 75%;
+            max-width: 300px;
 
-    /* ✅ Make height account for the 70px header */
-    height: calc(100vh - 70px);
+            /* ✅ Make height account for the 70px header */
+            height: calc(100vh - 70px);
 
-    background: var(--bg);
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 2rem;
+            background: var(--bg);
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 2rem;
 
-    /* ✅ Enable scrolling for overflow */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+            /* ✅ Enable scrolling for overflow */
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
 
-    /* Add padding so bottom buttons aren't flush against the edge */
-    padding-bottom: 2rem;
+            /* Add padding so bottom buttons aren't flush against the edge */
+            padding-bottom: 2rem;
 
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 100;
-}
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 100;
+        }
 
         .nav-menu.show {
             transform: translateX(0);
@@ -404,25 +404,76 @@
             margin: .3em 0 0
         }
 
-        /* Testimonials */
-        .testimonials {
-            position: relative
+        .testimonials-section {
+            width: 100vw;
+            overflow: hidden;
+            padding-left: 10px;
+            padding-right: 10px;
+        
+
+            color: var(--text);
+            padding: 0;
+            /* removed padding */
         }
 
         .testrail {
             display: flex;
-            gap: 16px;
-            overflow: visible;
-            flex-direction: row;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            cursor: grab;
+            gap: 1rem;
+            /* indicates grabbable */
+            user-select: none;
+            scroll-padding-left: 0;
+            /* ensure snap starts at edge */
         }
 
-        .testimonial {
-            min-width: 100%;
-            background: #1f1f1f;
-            border: 1px solid #2a2a2a;
-            border-radius: 16px;
-            padding: 20px
+        .testrail:active {
+            cursor: grabbing;
         }
+
+        /* Scrollbar styling */
+        .testrail::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .testrail::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .testrail::-webkit-scrollbar-thumb {
+            background-color: transparent;
+            border-radius: var(--radius);
+        }
+.testimonials {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 7.5vw; /* center first card */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+
+.testimonials::-webkit-scrollbar {
+    height: 8px;
+}
+
+.testimonials::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+        .testimonial {
+    scroll-snap-align: center;  /* center cards */
+    flex: 0 0 85vw;             /* 85% of viewport */
+    margin: 0 1vw;              /* gap between cards */
+    background: var(--panel);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
 
         .testimonial p {
             font-size: 1.05rem
@@ -435,25 +486,28 @@
             font-weight: 700
         }
 
-        .dots {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-top: 12px
-        }
 
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #3a3a3a;
-            border: none
-        }
+        /* Dots */
+        /* Dots */
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
 
-        .dot[aria-current="true"] {
-            background: linear-gradient(135deg, var(--accent), var(--accent-2))
-        }
+.dots button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
 
+.dots button.active {
+    background: var(--accent);
+}
         /* Contact */
         .contact-card {
             display: grid;
@@ -556,8 +610,7 @@
             .hero-card,
             .project-card,
             .experience-item,
-            .contact-card,
-            .testimonial {
+            .contact-card {
                 width: 100%;
                 max-width: 100%;
                 margin: 0;
@@ -868,10 +921,11 @@
         </section>
 
         <!-- Testimonials / Quotes -->
-        <section class="container testimonials" id="testimonials">
+        <section class="testimonials-section" id="testimonials">
             <h2>Quotes</h2>
             <p class="sub">What collaborators, lecturers and mentors say.</p>
             <div class="testrail" id="testrail" aria-live="polite">
+
                 <div class="testimonial">
                     <p>"Lucas is a rare kind of student, motivated, innovative, and determined to make a positive impact
                         on the world around him. It is a rare joy to find a student with such focus and drive, I look
@@ -1029,32 +1083,47 @@
             io.observe(div)
         })
 
-        // Testimonials slider
-        const rail = document.getElementById('testrail')
-        const slides = $$('.testimonial', rail)
-        const dots = document.getElementById('dots')
-        let i = 0, autoplay = true, timer
+const testrail = document.getElementById("testrail");
+const testimonials = document.querySelectorAll(".testimonial");
+const dotsContainer = document.getElementById("dots");
 
-        function go(n) {
-            i = (n + slides.length) % slides.length
-            rail.style.transform = `translateX(${-i * 100}%)`
-                ; $$('.dot', dots).forEach((d, idx) => d.setAttribute('aria-current', idx === i))
-            resetTimer()
+// Create dots
+dotsContainer.innerHTML = '';
+testimonials.forEach((_, index) => {
+    const dot = document.createElement("button");
+    dot.addEventListener("click", () => {
+        const card = testimonials[index];
+        const scrollPos = card.offsetLeft - (testrail.clientWidth - card.clientWidth)/2;
+        testrail.scrollTo({ left: scrollPos, behavior: 'smooth' });
+    });
+    dotsContainer.appendChild(dot);
+});
+
+const dots = dotsContainer.querySelectorAll("button");
+
+// Update active dot on scroll
+testrail.addEventListener("scroll", () => {
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    testimonials.forEach((card, i) => {
+        const distance = Math.abs((card.offsetLeft + card.offsetWidth/2) - (testrail.scrollLeft + testrail.clientWidth/2));
+        if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = i;
         }
-        function resetTimer() {
-            if (!autoplay) return
-            clearTimeout(timer)
-            timer = setTimeout(() => go(i + 1), 6500)
-        }
-        slides.forEach((_, idx) => {
-            const b = document.createElement('button')
-            b.className = 'dot'
-            b.type = 'button'
-            b.setAttribute('aria-label', `Show quote ${idx + 1}`)
-            b.addEventListener('click', () => { autoplay = false; go(idx) })
-            dots.appendChild(b)
-        })
-        go(0)
+    });
+
+    dots.forEach(dot => dot.classList.remove("active"));
+    if (dots[closestIndex]) dots[closestIndex].classList.add("active");
+});
+
+// Initialize first dot
+if (dots[0]) dots[0].classList.add("active");
+
+// Prevent text selection while grabbing
+testrail.addEventListener('mousedown', e => e.preventDefault());
+
 
         // Copy email
         const emailText = document.getElementById('emailText').textContent
